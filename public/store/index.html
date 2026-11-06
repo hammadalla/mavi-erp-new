@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mavi — Tailor Your Design</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --navy:#121E48; --navy2:#1D2F6F; --navy-l:#EEF2FB;
+    --gold:#B08D57; --gold-l:#FAF5EC; --gold-2:#D8C39A;
+    --cream:#F6F0EA; --ink:#1B2233; --muted:#7B8497;
+    --line:#E8E0D3; --ok:#1C7A4F; --bad:#B03131;
+    --r:16px;
+  }
+  body{font-family:"Segoe UI",Tahoma,system-ui,Arial,sans-serif;background:var(--cream);color:var(--ink);
+    font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:76px}
+  .wrap{max-width:470px;margin:0 auto;padding:0 14px}
+  header{background:linear-gradient(165deg,#22356f,#121E48 78%);color:#fff;padding:16px 0 22px;
+    border-bottom:3px solid var(--gold);position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 82% -10%,rgba(216,195,154,.22),transparent 45%);pointer-events:none}
+  .brandrow{display:flex;align-items:center;gap:11px;position:relative}
+  .emblem{width:46px;height:46px;border-radius:50%;box-shadow:0 0 0 2px rgba(216,195,154,.65);
+    background:#fff url('/brand/emblem_small.png') center/cover;flex:0 0 46px}
+  .brandrow b{display:block;font-size:19px;letter-spacing:2.5px}
+  .brandrow span{font-size:9.5px;letter-spacing:2.2px;color:var(--gold-2);text-transform:uppercase}
+  .acct{margin-inline-start:auto;text-align:left;font-size:11px;color:#c8d3ee}
+  .acct b{display:block;color:#fff;font-size:12.5px;letter-spacing:0}
+  .hero{margin-top:16px;position:relative}
+  .hero h1{font-size:20px;line-height:1.5}
+  .hero h1 em{color:var(--gold-2);font-style:normal}
+  .hero p{font-size:12.5px;color:#c2cdea;margin-top:5px}
+  .hchips{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+  .hchips span{font-size:11px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);
+    padding:3px 10px;border-radius:20px;color:#e6ecfa}
+  h2.sec{font-size:15px;margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+  h2.sec .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  @media(min-width:560px){.grid2{grid-template-columns:1fr 1fr 1fr}}
+  .pcard{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;
+    transition:.16s;box-shadow:0 1px 3px #1b22330a}
+  .pcard:hover{transform:translateY(-2px);border-color:var(--gold-2);box-shadow:0 6px 18px #1b223314}
+  .ph{height:clamp(200px,30vw,310px);position:relative;display:grid;place-items:center;background:linear-gradient(155deg,#eef2fb,#f6f2ea)}
+  .ph .badge{position:absolute;top:7px;inset-inline-start:7px;font-size:10px;font-weight:700;padding:2px 8px;
+    border-radius:20px;background:#fffffff2;color:var(--navy);border:1px solid #ffffff66}
+  .ph .badge.stockp{background:#f3eefc;color:#6b3fa0;border-color:#e2d7f5}
+  .ph .ic{opacity:.45}
+  .pbd{padding:9px 10px 11px}
+  .pnm{font-size:12.5px;font-weight:700;line-height:1.45;min-height:36px}
+  .ppr{font-size:14px;font-weight:800;color:var(--navy);margin-top:5px;direction:ltr;text-align:right}
+  .ppr small{font-size:10.5px;font-weight:600;color:var(--muted)}
+  .pmeta{font-size:10.5px;color:var(--muted);margin-top:3px}
+  .cswatch{display:flex;gap:3px;margin-top:6px}
+  .cswatch i{width:11px;height:11px;border-radius:50%;border:1px solid #00000015}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px;margin-bottom:12px}
+  .fld{margin-bottom:13px}
+  .fld label{display:block;font-size:12.5px;font-weight:700;margin-bottom:6px;color:#33405c}
+  input,select,textarea{width:100%;border:1px solid var(--line);background:#fff;border-radius:11px;
+    padding:11px 12px;font-family:inherit;font-size:14px;color:var(--ink)}
+  input:focus,textarea:focus{outline:2px solid #1d2f6f22;border-color:var(--navy2)}
+  .btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:11px 16px;border-radius:12px;
+    font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;
+    justify-content:center;gap:7px;text-decoration:none;transition:.15s}
+  .btn:hover{background:#fafbfe}
+  .btn.primary{background:var(--navy2);border-color:var(--navy2);color:#fff}
+  .btn.primary:hover{background:var(--navy)}
+  .btn.wa{background:#e9f8ef;border-color:#bfe6cf;color:#0d6841}
+  .btn.wide{width:100%}
+  .btn:disabled{opacity:.55;cursor:not-allowed}
+  .opts{display:flex;flex-wrap:wrap;gap:7px}
+  .opts button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 13px;
+    font-family:inherit;font-size:12.5px;cursor:pointer;color:#41506e;display:flex;align-items:center;gap:6px}
+  .opts button.on{border-color:var(--navy);background:var(--navy-l);color:var(--navy);font-weight:700}
+  .opts button i{width:12px;height:12px;border-radius:50%;border:1px solid #00000020}
+  .sheet{position:fixed;inset:0;background:#121e48d9;display:none;z-index:60;overflow:auto}
+  .sheet.on{display:block}
+  .sheetin{background:var(--cream);min-height:100%;max-width:470px;margin:0 auto;animation:up .22s ease}
+  @keyframes up{from{transform:translateY(16px);opacity:.5}to{transform:none;opacity:1}}
+  .sheethead{background:linear-gradient(165deg,#22356f,#121E48);color:#fff;padding:14px 16px 18px}
+  .closebtn{background:#ffffff1f;border:0;color:#fff;width:32px;height:32px;border-radius:50%;font-size:16px;
+    cursor:pointer;display:grid;place-items:center;font-family:inherit}
+  .sheethead h3{font-size:17px;margin-top:10px}
+  .sheethead .pr{font-size:21px;font-weight:800;margin-top:6px;direction:ltr;text-align:right}
+  .sheetbody{padding:14px 16px 26px}
+  .totline{display:flex;justify-content:space-between;font-size:14px;padding:10px 0;border-top:1px solid var(--line);
+    margin-top:10px;font-weight:800}
+  .totline .v{direction:ltr}
+  .mcard{background:#fff;border:1px dashed var(--gold-2);border-radius:12px;padding:12px;margin-bottom:13px}
+  .mcard .mt{font-size:12px;font-weight:700;color:var(--gold)}
+  .mcard .ms{font-size:11px;color:var(--muted);margin:3px 0 9px;line-height:1.7}
+  .ocard{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px 13px;margin-bottom:10px}
+  .ocard .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .code{font-size:11.5px;color:var(--muted);direction:ltr;font-family:ui-monospace,Consolas,monospace}
+  .st{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:20px}
+  .st.received{background:#eef2fb;color:#2c3f80}
+  .st.confirmed{background:#eef0ff;color:#4441a8}
+  .st.progress{background:#fdf3e3;color:#8a5a12}
+  .st.ready{background:#e8f6ef;color:#1c7a4f}
+  .st.done{background:#f1f2f5;color:#5c6675}
+  .st.cancelled{background:#fdecec;color:#b03131}
+  .track{display:flex;gap:3px;margin-top:10px}
+  .track i{flex:1;height:4px;border-radius:3px;background:#eceff5}
+  .track i.f{background:var(--navy2)}
+  .tabs{display:flex;gap:6px;overflow:auto;margin:14px 0 4px}
+  .tabs button{border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 14px;
+    font-family:inherit;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap}
+  .tabs button.on{background:var(--navy2);border-color:var(--navy2);color:#fff}
+  .bottomnav{position:fixed;bottom:0;inset-inline:0;background:#fffffff7;backdrop-filter:blur(8px);
+    border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:7px 4px 9px;z-index:50}
+  .bottomnav button{background:0;border:0;font-family:inherit;font-size:10.5px;color:var(--muted);cursor:pointer;
+    display:grid;justify-items:center;gap:2px;padding:2px 10px;font-weight:600}
+  .bottomnav button.on{color:var(--navy2)}
+  .bottomnav .ic{font-size:17px;line-height:1}
+  .toast{position:fixed;bottom:88px;inset-inline-start:50%;transform:translateX(50%) translateY(14px);
+    background:#121E48;color:#fff;padding:11px 18px;border-radius:12px;font-size:13px;font-weight:600;
+    opacity:0;pointer-events:none;transition:.25s;z-index:99;max-width:88%;text-align:center}
+  .toast.on{opacity:1;transform:translateX(50%) translateY(0)}
+  .empty{text-align:center;padding:30px 14px;color:var(--muted);font-size:13px;line-height:1.9}
+  .note{font-size:11.5px;color:#7a5c17;background:var(--gold-l);border:1px solid #efe5d2;border-radius:11px;
+    padding:9px 11px;line-height:1.8}
+  .lockrow{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--muted);margin-top:9px}
+  .me{display:flex;align-items:center;gap:11px}
+  .me .av{width:44px;height:44px;border-radius:50%;background:var(--navy-l);color:var(--navy);
+    display:grid;place-items:center;font-weight:800;font-size:16px;flex:0 0 44px}
+  .me span{display:block;font-size:11.5px;color:var(--muted)}
+  .measgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:11px}
+  .otpbox{display:flex;gap:8px;justify-content:center;direction:ltr;margin:6px 0 4px}
+  .otpbox input{width:46px;height:56px;text-align:center;font-size:22px;font-weight:800;padding:0}
+  .devhint{font-size:11.5px;color:#0d6841;background:#e9f8ef;border:1px solid #bfe6cf;border-radius:9px;
+    padding:8px 10px;margin-top:8px}
+  .cx-design{border:1px solid #e4d6c0;background:linear-gradient(145deg,#fff,#fbf7f0);padding:0;overflow:hidden}.cx-design summary{list-style:none;cursor:pointer;padding:15px;display:flex;align-items:center;gap:11px}.cx-design summary::-webkit-details-marker{display:none}.cx-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:var(--gold-l);color:var(--gold);font-size:19px;flex:0 0 auto}.cx-design summary b{display:block;font-size:13.5px;color:var(--navy)}.cx-design summary small{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:2px}.cx-chevron{margin-inline-start:auto;color:var(--gold);font-size:19px}.cx-design[open] .cx-chevron{transform:rotate(90deg)}.cx-design-body{padding:0 15px 15px}.cx-hint{background:#f8f5ee;border-radius:10px;padding:9px 11px;font-size:11.5px;color:#74634a;margin-bottom:13px}.cx-status{display:inline-flex;background:#eef2fb;color:var(--navy2);border-radius:20px;padding:4px 9px;font-size:10.5px;font-weight:700}.cx-order-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap}.cx-order-head b{font-size:13px}.cx-details{margin-top:10px;background:#faf8f4;border:1px solid #f0e9df;border-radius:10px;padding:10px 11px;font-size:12px;line-height:1.8}.cx-details .cx-line{display:flex;justify-content:space-between;gap:10px}.cx-details .cx-line span:first-child{color:var(--muted)}.cx-payment{background:#f8f9fc;border:1px solid #e8edf6;border-radius:11px;padding:12px;margin-top:11px}.cx-payment-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:7px}.cx-payment-head b{font-size:12.5px;color:var(--navy)}.cx-payment p{font-size:12px;color:#59677e;line-height:1.7;margin:5px 0}.cx-payment .fld{margin-top:10px;margin-bottom:10px}.cx-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.cx-actions .btn{flex:1;font-size:12px;padding:9px 12px}.cx-payment .btn{font-size:12px}.cx-muted{font-size:11.5px;color:var(--muted)}
+  .notif-badge{display:inline-grid;place-items:center;background:#b08d57;color:#fff;border-radius:20px;min-width:19px;height:19px;padding:0 5px;font-size:10px;margin-inline-start:4px}.notif-panel{border-color:#e4d6c0;background:#fff}.notif-head{display:flex;justify-content:space-between;gap:8px;align-items:center}.notif-head b{color:var(--navy);font-size:13px}.notif-item{padding:10px 0;border-bottom:1px solid #eee7db;font-size:12px;display:flex;align-items:flex-start;gap:8px}.notif-item:last-of-type{border:0}.notif-dot{flex:0 0 7px;width:7px;height:7px;border-radius:50%;margin-top:7px;background:var(--gold)}.notif-item.read .notif-dot{background:#d9d9d9}.notif-item small{display:block;color:var(--muted);font-size:10px}.notif-mark{margin-top:8px;font-size:12px!important;padding:8px 11px!important}.notif-note{font-size:11px;color:var(--muted);margin-top:7px}
+
+  /* Mobile, tablet and desktop layout; RTL and touch-friendly. */
+  html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable}
+  img{max-width:100%}
+  button,a,[role="button"],summary{touch-action:manipulation}
+  button:focus-visible,a:focus-visible,[role="button"]:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .tabs{scrollbar-width:thin;overscroll-behavior-inline:contain}
+  .pcard{min-width:0}.pnm,.pmeta,.cx-details,.note{overflow-wrap:anywhere}
+  .bottomnav{padding-bottom:calc(9px + env(safe-area-inset-bottom,0px))}
+  body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  .bottomnav button{min-height:44px;min-width:64px}
+  .sheetbody{padding-bottom:calc(26px + env(safe-area-inset-bottom,0px))}
+  .sheet{overscroll-behavior:contain}
+  .closebtn{width:44px;height:44px}
+  .opts button{min-height:44px}
+  @media(max-width:380px){.wrap{padding-inline:11px}.grid2{gap:8px}.pbd{padding:9px 8px}.hero h1{font-size:19px}}
+  @media(max-width:767px){input,select,textarea{font-size:16px}.tabs button{min-height:44px}.btn{min-height:44px}}
+  @media(min-width:768px){body{padding-bottom:36px}.wrap{max-width:1040px;padding-inline:24px}.hero{padding-bottom:8px}.hero h1{font-size:28px}.hero p{font-size:15px;max-width:700px}.grid2{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.ph{height:220px}.pbd{padding:15px}.pnm{font-size:15px;min-height:0}.pmeta{font-size:12px}.ppr{font-size:17px}.bottomnav{display:none}.sheetin{max-width:760px;min-height:0;margin:24px auto;border-radius:18px;overflow:hidden}.sheetbody{padding:22px 28px 30px}.sheethead{padding:20px 28px}.toast{bottom:24px}}
+  @media(min-width:1200px){.grid2{grid-template-columns:repeat(4,minmax(0,1fr))}.wrap{max-width:1200px}}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+.collection-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:12px 0 20px}.collection-tab{cursor:pointer;min-height:66px;border:1px solid #e9dfd0;border-radius:14px;background:#fff;color:#243454;font-family:inherit;font-weight:700;font-size:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:8px;text-align:center}.collection-tab span{font-size:18px;color:#b08c54}.collection-tab.on{background:#14244b;color:#fff;border-color:#14244b}.review-card{background:#fff;border:1px solid #eee4d8;border-radius:13px;padding:13px;margin:8px 0}.review-stars{color:#bb935a;letter-spacing:2px}.review-card p{white-space:pre-wrap;overflow-wrap:anywhere}@media(max-width:550px){.collection-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.collection-tab:last-child{grid-column:1/-1}}
+</style>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/brand/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MAVI">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#121E48">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brandrow">
+      <div class="emblem"></div>
+      <div><b>MAVI</b><span>Tailor Your Design</span></div>
+      <div class="acct"><b id="hName">أهلاً بيكي</b><span id="hSub">سجّلي دخولك</span></div>
+    </div>
+    <div class="hero">
+      <h1>تفاصيل تشبهكِ، <em>على مقاسك</em></h1>
+      <p>اكتشفي موديلات MAVI، أو شاركينا تصميمكِ الخاص. نرافقكِ من اختيار القطعة حتى استلامها.</p>
+      <div class="hchips"><span>تفصيل على مقاسك</span><span>متابعة طلبك</span><span>استلام أو توصيل</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="tabs" id="tabs"></div>
+  <div id="view"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+<nav class="bottomnav" id="bnav"></nav>
+<div class="sheet" id="sheet"><div class="sheetin" id="sheetin"></div></div>
+
+<script src="/store/custom.js"></script>
+<script src="/store/reviews.js"></script>
+<script>
+/* ============================================================ */
+const API = '/api/store';
+const TOKEN_KEY = 'mavi_store_token';
+let TOKEN = localStorage.getItem(TOKEN_KEY) || null;
+let ME = null, CAT = [], ORDERS = [], VIEW = 'cat', OPEN = null, LOGIN_STEP = 'phone', CAT_SECTION='all';
+
+const EGP = n => new Intl.NumberFormat('en-EG',{maximumFractionDigits:2}).format(n);
+const fmtDate = d => d ? new Date(d).toLocaleDateString('ar-EG-u-nu-latn',{day:'2-digit',month:'short',year:'numeric'}) : '';
+const $ = id => document.getElementById(id);
+let toastTimer;
+function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('on'),3000); }
+
+async function api(path, opts={}){
+  const res = await fetch(API+path, {
+    method: opts.method || 'GET',
+    headers: {'Content-Type':'application/json', ...(TOKEN?{Authorization:'Bearer '+TOKEN}:{})},
+    body: opts.body ? JSON.stringify(opts.body) : undefined,
+  });
+  let data = null; try { data = await res.json(); } catch(e){}
+  if (res.status === 401 && TOKEN){ clearToken(); }
+  if (!res.ok) throw Object.assign(new Error(data?.message || 'حصل خطأ'),
+                                    {status:res.status, code:data?.error, data});
+  return data;
+}
+
+function clearToken(){ customRows=null; ALERTS=[]; UNREAD=0; alertCustomerId=null; updatesPending=false; TOKEN=null; ME=null; localStorage.removeItem(TOKEN_KEY); renderTabs(); render(); }
+
+/* ---------- boot ---------- */
+async function boot(){
+  try { const c = await api('/catalogue'); CAT = c.styles; } catch(e){ toast('مش قادرين نحمل الكتالوج'); }
+  // try the token, and if there isn't one, the httpOnly cookie may still be valid —
+  // that's what keeps her signed in when she reopens the app from her home screen
+  try {
+    const me = await api('/me');
+    ME = me.profile;
+  } catch(e){ if (TOKEN) clearToken(); }
+  await loadReviews(); renderTabs(); render();
+}
+
+/* ---------- nav ---------- */
+const TABS = [
+  {k:'cat',  label:'الكتالوج', ic:'◇'},
+  {k:'mine', label:'طلباتي',   ic:'▤'},
+  {k:'data', label:'بياناتي',  ic:'☺'},
+];
+function renderTabs(){
+  $('tabs').innerHTML = TABS.map(t=>`<button class="${VIEW===t.k?'on':''}" onclick="go('${t.k}')">${t.label}${t.k==='mine'&&UNREAD?`<span class="notif-badge">${UNREAD>99?'99+':UNREAD}</span>`:''}</button>`).join('');
+  $('bnav').innerHTML = TABS.map(t=>`<button class="${VIEW===t.k?'on':''}" onclick="go('${t.k}')">
+      <span class="ic">${t.ic}</span>${t.label}${t.k==='mine'&&UNREAD?`<span class="notif-badge">${UNREAD>99?'99+':UNREAD}</span>`:''}</button>`).join('')
+    + `<button onclick="waContact()"><span class="ic">✆</span>كلمينا</button>`;
+  if(ME && alertCustomerId!==ME.id){alertCustomerId=ME.id;queueMicrotask(refreshOrderUpdates)}
+  if (ME){ $('hName').textContent = 'أهلاً ' + (ME.name||'').split(' ')[0]; $('hSub').textContent = ME.area || 'عميلة Mavi'; }
+  else { $('hName').textContent = 'أهلاً بيكي'; $('hSub').textContent = 'سجّلي دخولك'; }
+}
+function go(v){ VIEW=v; if(v==='mine' && ME){loadOrders();refreshCustom();refreshOrderUpdates();} renderTabs(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+function render(){
+  // the login flow always belongs to the "بياناتي" tab
+  // only an in-progress login flow (code / register / set-password) forces this tab;
+  // guests must still land on the catalogue
+  if (!ME && ['code','register','setpass'].includes(LOGIN_STEP)) VIEW = 'data';
+  $('view').innerHTML = ({cat:catView, mine:mineView, data:dataView})[VIEW]();
+}
+
+function waContact(){
+  const txt = encodeURIComponent('مرحباً Mavi 🤍 عندي استفسار');
+  window.open('https://wa.me/201013979358?text='+txt,'_blank');
+}
+
+/* ============================================================ 1. CATALOGUE */
+function catView(){
+  const year=Number(new Intl.DateTimeFormat('en',{year:'numeric',timeZone:'Africa/Cairo'}).format(new Date())); const all=CAT.filter(p=>p.type==='made'); const made=all.filter(p=>CAT_SECTION==='all'||(CAT_SECTION==='offers'?p.original_price!==null:(p.sections||[]).some(s=>s.section===CAT_SECTION&&(s.section!=='trend'||s.trend_year===year))));
+  return `
+  ${!ME?`<div class="panel" style="margin-top:12px;background:var(--navy-l);border-color:#dbe3f5">
+    <b style="font-size:13.5px;color:var(--navy)">أول مرة معانا؟</b>
+    <div style="font-size:12.5px;color:#44537a;margin-top:4px">
+      سجّلي برقم موبايلك ومقاساتك مرة واحدة — وبعد كده أي أوردر بيتم في دقيقة.</div>
+    <button class="btn primary wide" style="margin-top:10px" onclick="go('data')">تسجيل الدخول ومقاساتي</button>
+  </div>`:''}
+  ${customFormView()}
+  <h2 class="sec">اكتشفي مجموعات MAVI <span class="ln"></span></h2>
+  <div class="collection-tabs" aria-label="أقسام الكتالوج">${[['all','كل الموديلات','✦'],['summer','صيفي','☀'],['winter','شتوي','❄'],['trend','New Collection','◇'],['offers','العروض والخصومات','٪']].map(([id,label,icon])=>`<button class="collection-tab ${CAT_SECTION===id?'on':''}" aria-pressed="${CAT_SECTION===id}" onclick="selectCollection('${id}')"><span>${icon}</span>${label}</button>`).join('')}</div>
+  <h2 class="sec">${({all:'تفصيل على مقاسك',summer:'إطلالات صيفية',winter:'إطلالات شتوية',trend:'New Collection',offers:'العروض والخصومات'})[CAT_SECTION]} <span class="ln"></span></h2>
+  <div class="grid2">${made.map(pcard).join('')}</div>${made.length?'':'<div class="empty">لا توجد موديلات في هذا القسم حاليًا. اكتشفي باقي المجموعات.</div>'}
+  <div class="note" style="margin-top:16px">كل موديلاتنا تُفصّل لكِ. تكلفة التوصيل تُحدد حسب محافظتك بعد مراجعة الطلب.</div>
+  ${reviewsView()}
+  <div class="panel" style="margin-top:12px"><div class="lockrow"><span>✦</span><span>تحتاجين مساعدة في اختيارك؟ تواصلي معنا على واتساب.</span></div><button class="btn wa wide" style="margin-top:10px" onclick="waContact()">تواصلي مع MAVI</button></div>`;
+}
+function selectCollection(id){CAT_SECTION=id;render()}
+function pcard(p){
+  return `<div class="pcard" role="button" tabindex="0" aria-label="عرض ${safeCustom(p.name)}" onclick="openProduct('${p.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct('${p.id}')}"><div class="ph">${p.images?.length?`<img src="/api/catalogue/images/${Number(p.images[0])}" alt="${safeCustom(p.name)}" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0">`:'<span class="ic">✂</span>'}</div><div class="pbd"><div class="pmeta">تفصيل ${p.lead_days} يوم</div><div class="pnm">${safeCustom(p.name)}</div><div class="ppr">${EGP(p.price)} <small>ج.م</small> ${p.original_price!==null?`<del style="font-size:12px;color:var(--muted);font-weight:400">${EGP(p.original_price)}</del>`:''}</div><div class="pmeta">تفصيل على مقاسك</div><div class="pmeta">الألوان: ${p.colours.map(c=>safeCustom(c.name)).join('، ')||'تُحدد بالتواصل'}</div><div class="pmeta">الخامات: ${(p.fabrics||[]).map(safeCustom).join('، ')||'تُحدد بالتواصل'}</div></div></div>`;
+}
+function photoCarousel(p){const imgs=p.images||[];if(!imgs.length)return '';const n=OPEN.photoIndex||0;return `<div style="position:relative;overflow:hidden;border-radius:14px;background:#f5f5f5;margin-bottom:15px"><img src="/api/catalogue/images/${Number(imgs[n])}" alt="${safeCustom(p.name)} — صورة ${n+1}" style="display:block;width:100%;height:320px;object-fit:contain">${imgs.length>1?`<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:8px"><button class="btn" onclick="slidePhoto(-1)" aria-label="الصورة السابقة">‹</button><span>${n+1} / ${imgs.length}</span><button class="btn" onclick="slidePhoto(1)" aria-label="الصورة التالية">›</button></div>`:''}</div>`}
+function slidePhoto(d){const el=$('onote');if(el)OPEN.note=el.value;const g=$('order-governorate');if(g)OPEN.governorate=g.value;OPEN.photoIndex=((OPEN.photoIndex||0)+d+OPEN.p.images.length)%OPEN.p.images.length;refreshSheet()}
+
+/* ============================================================ 2. PRODUCT SHEET */
+function openProduct(id){
+  const p = CAT.find(x=>x.id===id); if(!p) return;
+  const prev = (OPEN && OPEN.id===id) ? OPEN : null;
+  OPEN = {
+    id, p,
+    colour: prev ? prev.colour : (p.colours[0]?.name || null),
+    length: prev ? prev.length : (p.lengths[0] || null),
+    size:   prev ? prev.size   : (p.sizes[1] || p.sizes[0] || null),
+    qty:    prev ? prev.qty    : 1,
+    deliver:prev ? prev.deliver: true,
+    note:   prev ? prev.note   : '',
+    fabric: prev ? prev.fabric : (p.fabrics?.[0] || 'قماش العميلة'),
+    governorate:prev ? prev.governorate : '', photoIndex:prev ? prev.photoIndex : 0,
+  };
+  $('sheetin').innerHTML = sheetHtml();
+  paintTotal();
+  $('sheet').classList.add('on');
+}
+function sheetHtml(){
+  const {p} = OPEN;
+  return `
+  <div class="sheethead">
+    <button class="closebtn" aria-label="إغلاق تفاصيل الموديل" onclick="closeSheet()">✕</button>
+    <h3>${p.name}</h3>
+    <div class="pr">${EGP(p.price)} <span style="font-size:12px;font-weight:600">ج.م</span> ${p.original_price!==null?`<del style="font-size:13px;opacity:.7">${EGP(p.original_price)} ج.م</del>`:''}</div>
+    <div style="font-size:11.5px;color:#c2cdea;margin-top:2px">${p.type==='stock'?'جاهز للتسليم':`التفصيل ${p.lead_days} يوم عمل`} · ${p.note||''}</div>
+  </div>
+  <div class="sheetbody">
+    ${photoCarousel(p)}
+    <div class="fld"><label>الخامة</label><select id="order-fabric" onchange="OPEN.fabric=this.value">${[...(p.fabrics||[]),'قماش العميلة'].map(f=>`<option value="${safeCustom(f)}" ${OPEN.fabric===f?'selected':''}>${safeCustom(f)}</option>`).join('')}</select><small>اختاري خامة من MAVI أو استخدمي قماشك الخاص.</small></div>
+    <div class="fld"><label>اللون</label>
+      <div class="opts">${p.colours.map(c=>`<button class="${OPEN.colour===c.name?'on':''}"
+        onclick="pick('colour','${c.name}')"><i style="background:${c.hex||'#ddd'}"></i>${c.name}</button>`).join('')}</div>
+    </div>
+    ${p.lengths.length?`<div class="fld"><label>الطول</label>
+      <div class="opts">${p.lengths.map(l=>`<button class="${OPEN.length===l?'on':''}"
+        onclick="pick('length',${l})">${l} سم</button>`).join('')}</div></div>`:''}
+    ${p.sizes.length?`<div class="fld"><label>المقاس</label>
+      <div class="opts">${p.sizes.map(s=>`<button class="${OPEN.size===s?'on':''}"
+        onclick="pick('size','${s}')">${s}</button>`).join('')}</div></div>`:''}
+    ${p.type==='stock'?`<div class="note">المتاح لهذا المقاس واللون: ${p.variants?.find(v=>v.size===OPEN.size && v.colour===OPEN.colour)?.qty || 0} قطعة. الكمية غير محجوزة إلا بعد تأكيد العربون؛ قد تنفد قبل ذلك.</div>`:''}
+    <div class="fld"><label>العدد</label>
+      <div class="opts">${[1,2,3,4,5].map(n=>`<button class="${OPEN.qty===n?'on':''}"
+        onclick="pick('qty',${n})">${n}</button>`).join('')}</div></div>
+    <div class="fld"><label>طريقة الاستلام</label>
+      <div class="opts">
+        <button class="${OPEN.deliver?'on':''}" onclick="pick('deliver',true)">توصيل للبيت (يُحدد حسب المحافظة)</button>
+        <button class="${!OPEN.deliver?'on':''}" onclick="pick('deliver',false)">استلام من عندنا</button>
+      </div></div>
+    ${OPEN.deliver?`<div class="fld"><label>المحافظة للتوصيل</label><input id="order-governorate" maxlength="80" value="${safeCustom(OPEN.governorate)}" placeholder="مثال: الجيزة"></div>`:''}
+    <div class="fld"><label>ملاحظة لنا (اختياري)</label>
+      <textarea id="onote" rows="2" placeholder="مثال: الطول 105 بالظبط">${OPEN.note||''}</textarea></div>
+
+    ${p.type==='made'?`<div class="mcard">
+      <div class="mt">مقاساتك ${ME && ME.measurements && ME.measurements.waist ? 'محفوظة ✓' : '— محتاجينها أول مرة'}</div>
+      <div class="ms">${ME && ME.measurements && ME.measurements.waist
+        ? `وسط ${ME.measurements.waist} · هيب ${ME.measurements.hip} · طول ${ME.measurements.length} سم`
+        : 'هتتسجّل مرة واحدة وتفضل معانا لكل أوردر.'}</div>
+      <button class="btn wide" onclick="closeSheet();go('data')">
+        ${ME && ME.measurements && ME.measurements.waist ? 'تعديل المقاسات' : 'إدخال المقاسات'}</button>
+    </div>`:''}
+
+    <div class="totline"><span>سعر القطعة قبل الشحن</span><span class="v" id="otot"></span></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn wa" onclick="waProduct()">واتساب</button>
+      <button class="btn primary" style="flex:1" onclick="submitOrder()">إرسال الطلب</button>
+    </div>
+    <div class="lockrow" style="justify-content:center">🔒 وصلينا طلبك، وهنراجع التفاصيل ونتواصل معاكي.</div>
+  </div>`;
+}
+function refreshSheet(){ $('sheetin').innerHTML = sheetHtml(); paintTotal(); }
+function paintTotal(){
+  const el = $('otot'); if(!el) return;
+  el.textContent = EGP(OPEN.p.price*OPEN.qty) + ' ج.م';
+}
+function pick(k,v){
+  const noteEl = $('onote'); if (noteEl) OPEN.note = noteEl.value;
+  const gov=$('order-governorate');if(gov)OPEN.governorate=gov.value;
+  const f=$('order-fabric');if(f)OPEN.fabric=f.value;
+  OPEN[k]=v; refreshSheet();
+}
+function closeSheet(){ $('sheet').classList.remove('on'); }
+document.addEventListener('keydown', e=>{if(e.key==='Escape' && $('sheet').classList.contains('on'))closeSheet()});
+
+function waProduct(){
+  const {p} = OPEN;
+  const txt = encodeURIComponent(
+    `مرحباً Mavi 🤍\nعايزة أطلب: ${p.name}\nاللون: ${OPEN.colour}` +
+    (OPEN.length?`\nالطول: ${OPEN.length} سم`:'') + (OPEN.size?`\nالمقاس: ${OPEN.size}`:'') +
+    `\nالعدد: ${OPEN.qty}\nالاستلام: ${OPEN.deliver?'توصيل':'استلام من عندنا'}` +
+    (ME?`\nالاسم: ${ME.name}\nالموبايل: ${ME.phone}`:''));
+  window.open('https://wa.me/201013979358?text='+txt,'_blank');
+}
+
+async function submitOrder(){
+  if(!ME){ toast('سجّلي دخولك الأول 🙏'); closeSheet(); go('data'); return; }
+  const noteEl = $('onote');
+  const body = {
+    style_id: OPEN.id, colour: OPEN.colour, length_cm: OPEN.length,
+    size: OPEN.size, qty: OPEN.qty, delivery: OPEN.deliver,
+    note: noteEl ? noteEl.value.trim() : OPEN.note,
+    governorate: $('order-governorate')?.value.trim() || '', fabric_choice: $('order-fabric')?.value || OPEN.fabric,
+  };
+  try{
+    const r = await api('/orders', {method:'POST', body});
+    closeSheet();
+    toast('وصلنا طلبك ✓ كود المتابعة ' + r.order.code);
+    go('mine');
+    loadOrders();
+  }catch(e){
+    if (e.data?.error === 'measurements_required'){
+      toast('التفصيل محتاج مقاساتك الأول');
+      closeSheet(); go('data');
+    } else if (e.status === 401){
+      toast('سجّلي دخولك الأول'); closeSheet(); go('data');
+    } else toast(e.message);
+  }
+}
+
+/* ============================================================ 3. MY ORDERS */
+async function loadOrders(){
+  try { const r = await api('/orders'); ORDERS = r.orders; } catch(e){ ORDERS = []; }
+  if (VIEW === 'mine') render();
+}
+let ALERTS=[], UNREAD=0, alertCustomerId=null, refreshBusy=false, updatesPending=false;
+function measurementsComplete(){const m=ME?.measurements||{};return !!(ME&&ME.name&&ME.name.trim().length>=3&&ME.name.trim()!=='عميلة جديدة'&&['waist','hip','bust','length'].every(k=>Number(m[k])>=20&&Number(m[k])<=250));}
+function notificationsView(){if(!ALERTS.length)return '';return `<section class="panel notif-panel"><div class="notif-head"><b>تحديثات طلباتك</b><span class="cx-status">${UNREAD?UNREAD+' جديد':'تمت القراءة'}</span></div>${ALERTS.map(n=>`<div class="notif-item ${n.read_at?'read':''}"><span class="notif-dot"></span><div>${safeCustom(n.message)}<small>${safeCustom(n.created_at)}</small></div></div>`).join('')}${UNREAD?'<button class="btn notif-mark" onclick="markNotificationsRead()">تحديد الكل كمقروء</button>':''}<p class="notif-note">تظهر تحديثات طلباتك هنا عند فتح حسابك.</p></section>`}
+async function markNotificationsRead(){try{await api('/notifications/read-all',{method:'POST'});await refreshOrderUpdates(true)}catch(e){toast(e.message)}}
+async function refreshOrderUpdates(force=false){
+ if(!ME||refreshBusy)return;refreshBusy=true;const customerId=ME.id;
+ try{const [n,o,c]=await Promise.all([api('/notifications'),api('/orders'),VIEW==='mine'?api('/custom-requests'):Promise.resolve(null)]);if(!ME||ME.id!==customerId)return;const changed=JSON.stringify(ALERTS)!==JSON.stringify(n.notifications)||UNREAD!==n.unread||JSON.stringify(ORDERS)!==JSON.stringify(o.orders)||(c&&JSON.stringify(customRows)!==JSON.stringify(c.requests));ALERTS=n.notifications;UNREAD=n.unread;ORDERS=o.orders;if(c)customRows=c.requests;renderTabs();const editing=[...document.querySelectorAll('#view input[type=file]')].some(x=>x.files.length);const focused=!!document.activeElement?.closest('#view')&&['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName);if(VIEW==='mine'&&(changed||force||updatesPending)){if(editing||focused)updatesPending=true;else{updatesPending=false;render()}}}catch(e){}finally{refreshBusy=false}
+}
+setInterval(()=>{if(ME && !document.hidden)refreshOrderUpdates()},15000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&ME)refreshOrderUpdates()});
+const STEP_LABELS = ['وصلنا طلبك','اتأكد','في التفصيل','جاهز','اتسلّم'];
+function mineView(){
+  if(!ME) return `<div class="empty">🔒<br><b style="color:var(--ink)">محتاجة تسجيل دخول</b><br>
+    تشوفي طلباتك وتتابعيها لحظة بلحظة.<br>
+    <button class="btn primary" style="margin-top:14px" onclick="go('data')">دخول / تسجيل</button></div>`;
+  const customCards=customHistoryView();
+  if(!ORDERS.length && customRows!==null && !customCards && !ALERTS.length) return `<h2 class="sec">طلباتي <span class="ln"></span></h2>
+    <div class="empty">✂<br>لسه مفيش طلبات.<br>
+    <button class="btn primary" style="margin-top:12px" onclick="go('cat')">اتفرجي على الكتالوج</button></div>`;
+  return `<h2 class="sec">طلباتي <span class="ln"></span></h2>
+  ${notificationsView()}
+  ${customCards}
+  ${ORDERS.map(o=>{
+    const step = o.step || 1;
+    return `<div class="ocard">
+      <div class="top"><span class="code">${o.code}</span>
+        <span class="st ${o.status}">${o.statusLabel}</span></div>
+      <div style="font-size:13.5px;font-weight:700;margin-top:4px">${o.items.map(i=>i.name).join(' + ')}</div>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:2px">
+        ${o.items.map(i=>`${i.colour||''}${i.length_cm?' · '+i.length_cm+' سم':''}${i.size?' · '+i.size:''} · عدد ${i.qty}`).join(' | ')}
+      </div>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:2px">
+        ${EGP(o.total)} ج.م ${o.delivery_requested&&!o.shipping_quoted?'(قبل الشحن؛ يُحدد لاحقًا)':''} · ${o.delivery_requested?(o.shipping_quoted?'توصيل '+EGP(o.delivery_fee)+' ج.م':'توصيل — التكلفة قيد التحديد'):'استلام من عندنا'}${o.promise_date?` · وعد التسليم ${fmtDate(o.promise_date)}`:''}
+      </div>
+      ${orderDepositView(o)}
+      <div class="track">${STEP_LABELS.map((_,i)=>`<i class="${i<step?'f':''}"></i>`).join('')}</div>
+      <div style="display:flex;gap:7px;margin-top:11px">
+        <button class="btn wa wide" onclick="askAbout('${o.code}')">استفسار عن الطلب</button>
+      </div>
+    </div>`;
+  }).join('')}
+  <div class="note" style="margin-top:6px">تقدري تتابعي حالة الطلب هنا، أو تكلمينا على واتساب للاستفسار.</div>`;
+}
+function askAbout(code){
+  const o = ORDERS.find(x=>x.code===code);
+  const txt = encodeURIComponent(`مرحباً Mavi 🤍\nبستفسر عن طلبي ${code} — ${o?o.items.map(i=>i.name).join(' + '):''}.`);
+  window.open('https://wa.me/201013979358?text='+txt,'_blank');
+}
+
+/* ============================================================ 4. MY DATA / LOGIN */
+function dataView(){
+  // phone / code / register / set-password all live here — even for a logged-in
+  // customer who just proved her number and still has to choose a password
+  if(!ME || ['code','register','setpass'].includes(LOGIN_STEP)) return loginView();
+  const m = ME.measurements || {};
+  return `
+  <h2 class="sec">بياناتي <span class="ln"></span></h2>
+  <div class="panel">
+    <div class="me">
+      <div class="av">${(ME.name||'؟')[0]}</div>
+      <div><b>${ME.name}</b><span>${ME.phone}${ME.area?' · '+ME.area:''}</span></div>
+      <button class="btn" style="margin-inline-start:auto;padding:6px 11px;font-size:12px" onclick="logout()">خروج</button>
+    </div>
+    <div class="fld" style="margin-top:14px"><label>الاسم</label>
+      <input id="pname" value="${ME.name||''}" placeholder="الاسم بالكامل"></div>
+    <div class="fld"><label>المنطقة</label>
+      <input id="parea" value="${ME.area||''}" placeholder="الهرم / المعادي…"></div>
+    <button class="btn wide" onclick="saveProfile()">حفظ البيانات</button>
+  </div>
+
+  <div class="panel">
+    <div style="font-size:13.5px;font-weight:700">مقاساتي
+      <span style="font-weight:500;font-size:11.5px;color:var(--muted)">(بالسنتيمتر · الكم والذراع اختياريان)</span></div>
+    <div class="measgrid">
+      ${[['waist','دوران الوسط'],['hip','دوران الهيب'],['bust','دوران الصدر'],
+         ['length','الطول المطلوب'],['sleeve','طول الكم'],['arm','دوران الذراع']].map(([k,l])=>`
+        <div><label style="display:block;font-size:11.5px;color:#44537a;margin-bottom:4px">${l}</label>
+        <input type="number" id="m_${k}" value="${m[k]||''}" placeholder="سم" inputmode="numeric"></div>`).join('')}
+    </div>
+    <div class="note" style="margin-top:11px">احفظي الصدر والوسط والهيب والطول لإرسال تصميم خاص. يمكنكِ تحديث مقاساتك في أي وقت.</div>
+    <button class="btn primary wide" style="margin-top:11px" onclick="saveMeasurements()">حفظ المقاسات</button>
+  </div>
+
+  <div class="panel">
+    <div style="font-size:13px;font-weight:700;margin-bottom:7px">حسابي وخصوصيتي</div>
+    <div class="lockrow">🔒 طلباتك ومقاساتك محفوظة في حسابك ولا تظهر للعميلات الأخريات.</div>
+    <div class="lockrow">◈ يمكنكِ تعديل بياناتك ومقاساتك في أي وقت.</div>
+    <details style="margin-top:12px"><summary>تغيير كلمة المرور</summary><div class="fld"><label>كلمة المرور الحالية</label><input id="current-password" type="password" autocomplete="current-password"></div><div class="fld"><label>كلمة المرور الجديدة (١٠ أحرف على الأقل)</label><input id="new-password" type="password" autocomplete="new-password"></div><button class="btn" onclick="changeCustomerPassword()">حفظ كلمة المرور</button></details>
+    <div class="lockrow">✆ للدعم: <b style="direction:ltr">+20 10 13979358</b></div>
+  </div>`;
+}
+
+function loginView(){
+  if (LOGIN_STEP === 'code'){
+    return `<h2 class="sec">تأكيد رقمك <span class="ln"></span></h2>
+    <div class="panel">
+      <div style="font-size:13px;color:#44537a;margin-bottom:8px">
+        بعتنالك كود ٦ أرقام على واتساب <b style="direction:ltr">${window.__phone||''}</b></div>
+      <div class="otpbox">${[0,1,2,3,4,5].map(i=>`<input id="o${i}" maxlength="1" inputmode="numeric"
+        oninput="otpNext(this,${i})" onkeydown="otpBack(event,${i})">`).join('')}</div>
+      ${window.__devcode?`<div class="devhint">وضع التجربة — الكود: <b>${window.__devcode}</b></div>`:''}
+      ${window.__manual?`<div class="lockrow" style="background:#FFF8E8;border-color:#F0DFB4">
+        كودك هيوصلك على واتساب خلال دقايق. لو مستعجلة كلّمي البراند:
+        <b style="direction:ltr">+20 10 13979358</b></div>`:''}
+      <button class="btn primary wide" style="margin-top:12px" onclick="verifyCode()">تأكيد ودخول</button>
+      <button class="btn wide" style="margin-top:8px" onclick="LOGIN_STEP='phone';render()">تغيير الرقم</button>
+    </div>`;
+  }
+
+  if (LOGIN_STEP === 'setpass'){
+    return `<h2 class="sec">اختاري باسورد <span class="ln"></span></h2>
+    <div class="panel">
+      <div style="font-size:12.5px;color:#44537a;margin-bottom:11px">
+        عشان تدخلي بسرعة المرة الجاية من غير كود — اختاري باسورد ليكي.</div>
+      <div class="fld"><label>الباسورد (٦ حروف أو أرقام على الأقل)</label>
+        <input id="spass" type="password" placeholder="••••••"></div>
+      <button class="btn primary wide" onclick="setPassword()">حفظ ودخول</button>
+      <button class="btn wide" style="margin-top:8px" onclick="skipSetPassword()">مش دلوقتي</button>
+    </div>`;
+  }
+
+  if (LOGIN_STEP === 'register'){
+    return `<h2 class="sec">حساب جديد <span class="ln"></span></h2>
+    <div class="panel">
+      <div style="font-size:12.5px;color:#44537a;margin-bottom:11px">
+        أول مرة معانا؟ اكتبي اسمك ورقمك واختاري باسورد — دقيقة واحدة.</div>
+      <div class="fld"><label>الاسم</label>
+        <input id="rname" placeholder="اسمك"></div>
+      <div class="fld"><label>رقم الموبايل</label>
+        <input id="rphone" type="tel" inputmode="numeric" placeholder="01xxxxxxxxx" style="direction:ltr;text-align:right"></div>
+      <div class="fld"><label>الباسورد (٦ حروف أو أرقام على الأقل)</label>
+        <input id="rpass" type="password" placeholder="••••••"></div>
+      <button class="btn primary wide" onclick="register()">إنشاء الحساب</button>
+      <button class="btn wide" style="margin-top:8px" onclick="LOGIN_STEP='phone';render()">عندي حساب بالفعل</button>
+    </div>`;
+  }
+
+  return `<h2 class="sec">دخول <span class="ln"></span></h2>
+  <div class="panel">
+    <div class="fld"><label>رقم الموبايل</label>
+      <input id="phone" type="tel" inputmode="numeric" placeholder="01xxxxxxxxx" style="direction:ltr;text-align:right"></div>
+    <div class="fld"><label>الباسورد</label>
+      <input id="pass" type="password" placeholder="••••••" onkeydown="if(event.key==='Enter')login()"></div>
+    <button class="btn primary wide" onclick="login()">دخول</button>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn" style="flex:1" onclick="LOGIN_STEP='register';render()">حساب جديد</button>
+      <button class="btn" style="flex:1" onclick="forgotPassword()">نسيت الپاسورد</button>
+    </div>
+    <div class="lockrow" style="justify-content:center">🔒 رقمك بيستخدم للدخول والتواصل عن طلباتك بس.</div>
+  </div>`;
+}
+
+async function login(){
+  const phone = ($('phone').value||'').replace(/\s/g,'');
+  const password = $('pass').value || '';
+  if(!/^01[0-9]{9}$/.test(phone)){ toast('رقم الموبايل لازم يبدأ بـ 01 ويكون 11 رقم'); return; }
+  if(password.length<1){ toast('اكتبي الباسورد'); return; }
+  try{
+    const r = await api('/auth/login', {method:'POST', body:{phone, password}});
+    TOKEN = r.token; localStorage.setItem(TOKEN_KEY, TOKEN);
+    ME = r.profile; LOGIN_STEP='phone'; renderTabs(); render();
+    toast('أهلاً بيكي 🤍');
+  }catch(e){
+    if (e.code === 'needs_password'){
+      toast(e.message);
+      window.__phone = phone;
+      forgotPassword();
+      return;
+    }
+    toast(e.message);
+  }
+}
+
+async function register(){
+  const name = ($('rname').value||'').trim();
+  const phone = ($('rphone').value||'').replace(/\s/g,'');
+  const password = $('rpass').value || '';
+  if(name.length<2){ toast('اكتبي اسمك'); return; }
+  if(!/^01[0-9]{9}$/.test(phone)){ toast('رقم الموبايل لازم يبدأ بـ 01 ويكون 11 رقم'); return; }
+  if(password.length<6){ toast('الباسورد لازم ٦ حروف على الأقل'); return; }
+  try{
+    const r = await api('/auth/register', {method:'POST', body:{name, phone, password}});
+    TOKEN = r.token; localStorage.setItem(TOKEN_KEY, TOKEN);
+    ME = r.profile; LOGIN_STEP='phone'; renderTabs(); render();
+    toast('حسابك اتعمل ✓');
+  }catch(e){ toast(e.message); }
+}
+
+async function setPassword(){
+  const password = $('spass').value || '';
+  if (password.length<6){ toast('الباسورد لازم ٦ حروف على الأقل'); return; }
+  try{
+    const r = await api('/auth/set-password', {method:'POST', body:{password}});
+    ME = r.profile; LOGIN_STEP='phone'; renderTabs(); render();
+    toast('تم ✓ المرة الجاية ادخلي بالباسورد');
+  }catch(e){ toast(e.message); }
+}
+function skipSetPassword(){
+  LOGIN_STEP='phone'; renderTabs(); render();
+}
+
+async function changeCustomerPassword(){try{await api('/auth/change-password',{method:'POST',body:{current:$('current-password').value,next:$('new-password').value}});$('current-password').value='';$('new-password').value='';toast('تم تغيير كلمة المرور');}catch(e){toast(e.message)}}
+async function forgotPassword(){
+  const phone = ($('phone').value||'').replace(/\s/g,'');
+  const msg = 'مرحباً، نسيت كلمة مرور حسابي في MAVI وأحتاج المساعدة في استعادته.' + (/^01[0-9]{9}$/.test(phone) ? ' رقم حسابي: '+phone : '');
+  window.open('https://wa.me/201013979358?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer');
+  toast('تواصلي معنا لمساعدتك في استعادة حسابك بعد التأكد من هويتك');
+}
+
+function otpNext(el,i){
+  el.value = el.value.replace(/\D/g,'').slice(0,1);
+  if (el.value && i<5) $('o'+(i+1)).focus();
+  if (i===5 && el.value) verifyCode();
+}
+function otpBack(e,i){
+  if (e.key==='Backspace' && !e.target.value && i>0) $('o'+(i-1)).focus();
+}
+async function verifyCode(){
+  const code = [0,1,2,3,4,5].map(i=>($('o'+i)?.value||'')).join('');
+  if (code.length<6){ toast('اكتبي الكود كامل'); return; }
+  try{
+    const r = await api('/auth/verify', {method:'POST', body:{phone:window.__phone, code}});
+    TOKEN = r.token; localStorage.setItem(TOKEN_KEY, TOKEN);
+    ME = r.profile; window.__manual=false;
+    if (!r.profile.has_password){ LOGIN_STEP='setpass'; render(); return; }   // ask once
+    LOGIN_STEP='phone'; renderTabs(); render();
+    toast('أهلاً بيكي 🤍');
+  }catch(e){ toast(e.message); }
+}
+
+async function saveProfile(){
+  try{
+    const r = await api('/me', {method:'PATCH', body:{name:$('pname').value.trim(), area:$('parea').value.trim()}});
+    ME = r.profile; renderTabs(); render(); toast('تم الحفظ ✓');
+  }catch(e){ toast(e.message); }
+}
+async function saveMeasurements(){
+  const body = {};
+  [['waist'],['hip'],['bust'],['length'],['sleeve'],['arm']].forEach(([k])=>{
+    const v = $('m_'+k).value; if (v !== '') body[k] = Number(v);
+  });
+  try{
+    await api('/me/measurements', {method:'PUT', body});
+    const me = await api('/me'); ME = me.profile; render(); toast('المقاسات اتحفظت ✓');
+  }catch(e){ toast(e.message); }
+}
+async function logout(){
+  try{ await api('/auth/logout',{method:'POST'}); }catch(e){}
+  clearToken(); ORDERS=[]; toast('خرجتي');
+}
+
+/* ---------- boot ---------- */
+$('sheet').addEventListener('click', e=>{ if(e.target.id==='sheet') closeSheet(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeSheet(); });
+boot();
+</script>
+<script>
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+# Free HTTPS with no domain and no DNS setup.
+# Caddy listens on 80/443 for ANY hostname, so both
+#   https://141-147-20-5.sslip.io   (free, no domain needed)
+#   https://shop.mavibrand.com      (your own domain later)
+# work with automatic Let's Encrypt certificates.
+
+{
+	email admin@mavi.eg
+	# uncomment while testing with a bare IP over http only:
+	# auto_https off
+}
+
+:80 {
+	redir https://{host}{uri} permanent
+}
+
+:443 {
+	encode zstd gzip
+	reverse_proxy mavi:3000 {
+		header_up X-Forwarded-Proto https
+	}
+}

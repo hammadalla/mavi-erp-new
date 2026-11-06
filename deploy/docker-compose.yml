@@ -1,0 +1,42 @@
+# Mavi ERP — one command, always on, free-friendly (Oracle Cloud / any VPS / your PC)
+#
+#   docker compose -f deploy/docker-compose.yml up -d --build
+#
+# Bring your own HTTPS later by setting MAVI_DOMAIN and pointing DNS at this server;
+# Caddy fetches a Let's Encrypt certificate automatically.
+services:
+  mavi:
+    build: ..
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      DB_PATH: /data/mavi.db
+      SHOW_OTP: "0"
+      AUTO_SEED: "0"          # production must not create demo accounts
+      INITIAL_ADMIN_EMAIL: ${INITIAL_ADMIN_EMAIL:?Set INITIAL_ADMIN_EMAIL before starting}
+      INITIAL_ADMIN_PASSWORD: ${INITIAL_ADMIN_PASSWORD:?Set INITIAL_ADMIN_PASSWORD before starting}
+    volumes:
+      - mavi-data:/data       # ← orders, customers, money live here and survive restarts
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on: [mavi]
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  mavi-data:
+  caddy-data:
+  caddy-config:

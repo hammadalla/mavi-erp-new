@@ -1,0 +1,24 @@
+{
+  "name": "mavi-erp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mavi Brand — lightweight ERP + customer storefront (Arabic RTL)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "seed": "node src/seed.js",
+    "test": "node test/api.test.js",
+    "dev": "node src/server.js",
+    "setup": "node src/seed.js",
+    "reset": "node src/seed.js --force",
+    "recover": "node src/recover.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "express": "^4.21.2",
+    "qrcode": "^1.5.4"
+  }
+}

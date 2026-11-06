@@ -1,0 +1,24 @@
+# Render blueprint — lets Render set everything up automatically from GitHub.
+services:
+  - type: web
+    name: mavi-erp
+    runtime: docker            # uses the Dockerfile in this folder
+    plan: starter              # paid plan required for a persistent disk
+    healthCheckPath: /healthz
+    envVars:
+      - key: DB_PATH
+        value: /data/mavi.db
+      - key: SHOW_OTP
+        value: "0"             # real deployments must not echo the login code
+      - key: AUTO_SEED
+        value: "0"             # production must not create demo accounts
+      - key: INITIAL_ADMIN_EMAIL
+        sync: false
+      - key: INITIAL_ADMIN_PASSWORD
+        sync: false
+      - key: NODE_ENV
+        value: production
+    disk:
+      name: mavi-data
+      mountPath: /data         # ← orders live here and survive redeploys
+      sizeGB: 1
